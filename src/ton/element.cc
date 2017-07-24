@@ -16,7 +16,7 @@ Element& Object::operator[](const std::string& name) {
             return member;
         }
     }
-    _members.push_back({name, {}});
+    _members.push_back({name, Type{}});
     return _members.back();
 }
 
@@ -42,6 +42,11 @@ Element::Element(std::string&& name, const Type& type)
 
 Element& Element::operator=(const Type& type) {
     _type = type;
+    return *this;
+}
+
+Element& Element::operator=(Type&& type) {
+    _type = std::move(type);
     return *this;
 }
 

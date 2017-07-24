@@ -27,7 +27,7 @@ bool Document::load_from_string(std::string&& source) {
     return parser.errors_reported();
 }
 
-Element Document::operator[](const std::string& name) {
+Element& Document::operator[](const std::string& name) {
     return _root[name];
 }
 

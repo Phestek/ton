@@ -37,9 +37,12 @@ public:
     Element(std::string&& name, const Type& type);
     // This does not override default copy or move assignment operator.
     Element& operator=(const Type& type);
+    Element& operator=(Type&& type);
 
     template<typename T>
-    T as();
+    T& as();
+    template<typename T>
+    const T& as() const;
 
 private:
     friend class Object;
@@ -49,7 +52,12 @@ private:
 };
 
 template <typename T>
-T Element::as() {
+T& Element::as() {
+    return std::get<T>(_type);
+}
+
+template <typename T>
+const T& Element::as() const {
     return std::get<T>(_type);
 }
 

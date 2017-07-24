@@ -36,6 +36,7 @@ target_include_directories(ton PUBLIC include src)
 if(NOT TON_NO_TESTS)
     enable_testing()
     set(TESTS
+            test/document_tests.cc
             test/element_tests.cc
             test/lexer_tests.cc
             test/main.cc

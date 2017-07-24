@@ -11,7 +11,7 @@ public:
     bool reload_from_file();
     bool load_from_string(std::string&& source);
 
-    Element operator[](const std::string& name);
+    Element& operator[](const std::string& name);
 
     void push_back(Element&& element);
     void push_back(const Element& element);
