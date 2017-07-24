@@ -39,3 +39,33 @@ TEST(Element, Object) {
     ton::Element o{"str", ton::Object{std::vector<ton::Element>{}}};
 }
 
+TEST(Element, Integer_Comparison_Equals) {
+    ton::Element val{"val", 10};
+    ASSERT_EQ(val, 10);
+}
+
+TEST(Element, Integer_Comparison_Not_Equals) {
+    ton::Element val{"val", 10};
+    ASSERT_NE(val, 20);
+}
+
+TEST(Element, Float_Comparison_Equals) {
+    ton::Element val{"val", 1.0};
+    ASSERT_EQ(val, 1.0);
+}
+
+TEST(Element, Float_Comparison_Not_Equals) {
+    ton::Element val{"val", 1.0};
+    ASSERT_NE(val, 2.0);
+}
+
+//TEST(Element, String_Comparison_Equals) {
+    //ton::Element val{"val", "asdf"};
+    //ASSERT_EQ(val, "asdf");
+//}
+
+//TEST(Element, String_Comparison_Not_Equals) {
+    //ton::Element val{"val", "asdf"};
+    //ASSERT_NE(val, "fdsa");
+//}
+

@@ -47,9 +47,18 @@ public:
 private:
     friend class Object;
     friend class Document;
+    template <typename T>
+    friend bool operator==(const Element& left, const T& right);
+    template <typename T>
+    friend bool operator!=(const Element& left, const T& right);
     std::string _name;
     Type        _type;
 };
+
+template <typename T>
+bool operator==(const Element& left, const T& right);
+template <typename T>
+bool operator!=(const Element& left, const T& right);
 
 template <typename T>
 T& Element::as() {
@@ -59,6 +68,16 @@ T& Element::as() {
 template <typename T>
 const T& Element::as() const {
     return std::get<T>(_type);
+}
+
+template <typename T>
+bool operator==(const Element& left, const T& right) {
+    return std::get<T>(left._type) == right;
+}
+
+template <typename T>
+bool operator!=(const Element& left, const T& right) {
+    return std::get<T>(left._type) != right;
 }
 
 }
