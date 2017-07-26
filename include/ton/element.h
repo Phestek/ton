@@ -99,10 +99,16 @@ public:
 private:
     friend class Object;
     friend class Document;
+    
     template <typename T>
     friend bool operator==(const Element& left, const T& right);
     template <typename T>
     friend bool operator!=(const Element& left, const T& right);
+    
+    // We need special corner case for comparing 'String' with 'const char*' (eg. "qwer").
+    //friend bool operator==(const Element& left, const char* str);
+    //friend bool operator!=(const Element& left, const char* str);
+    
     std::string _name;
     Type        _type;
 };
@@ -131,6 +137,14 @@ template <typename T>
 bool operator!=(const Element& left, const T& right) {
     return std::get<T>(left._type) != right;
 }
+
+//bool operator==(const Element& left, const char* str) {
+    //return std::get<String>(left._type) == str;
+//}
+
+//bool operator!=(const Element& left, const char* str) {
+    //return std::get<String>(left._type) != str;
+//}
 
 }
 

@@ -79,13 +79,13 @@ TEST(Element, Float_Comparison_Not_Equals) {
     ASSERT_NE(val, 2.0);
 }
 
-//TEST(Element, String_Comparison_Equals) {
-    //ton::Element val{"val", "asdf"};
-    //ASSERT_EQ(val, "asdf");
-//}
+TEST(Element, String_Comparison_Equals) {
+    ton::Element val{"val", "asdf"};
+    ASSERT_EQ(val.as<ton::String>(), "fdsa");
+}
 
-//TEST(Element, String_Comparison_Not_Equals) {
-    //ton::Element val{"val", "asdf"};
-    //ASSERT_NE(val, "fdsa");
-//}
+TEST(Element, String_Comparison_Not_Equals) {
+    ton::Element val{"val", "asdf"};
+    ASSERT_NE(val.as<ton::String>(), "fdsa");
+}
 
