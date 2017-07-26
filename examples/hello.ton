@@ -1,0 +1,10 @@
+int = 10
+float = 10.5
+string = "hello"
+array = [ 10, 20, 30 ]
+object {
+    neverending = 10
+    circus      = 20.0
+    of          = "pain"
+}
+
