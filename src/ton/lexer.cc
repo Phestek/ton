@@ -43,6 +43,11 @@ void Lexer::load_from_string(std::string&& source) {
             ++_current;
             continue;
         }
+        if(c == ',') {
+            _tokens.push_back({Token_Type::COMMA, "", _line, _current - _last_newline});
+            ++_current;
+            continue;
+        }
         if(c == '"') {
             string(c);
             continue;

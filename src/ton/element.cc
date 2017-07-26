@@ -10,6 +10,86 @@ Object::Object(std::vector<Element>&& members)
         : _members{members} {
 }
 
+Array::Array() {}
+
+Array::Array(const Array& other) {
+    std::copy(other._elements.begin(), other._elements.end(), std::back_inserter(_elements));
+}
+
+//Array::Array(Array&& other) {
+    //_elements = std::move(other._elements);
+//}
+
+Array::Array(const std::vector<Type>& vec) {
+    std::copy(vec.begin(), vec.end(), std::back_inserter(_elements));
+}
+
+//Array::Array(std::vector<Type>&& vec) {
+    //_elements = std::move(vec);
+//}
+
+Array& Array::operator=(const Array& other) {
+    std::copy(other._elements.begin(), other._elements.end(), std::back_inserter(_elements));
+    return *this;
+}
+
+//Array& Array::operator=(Array&& other) {
+    //_elements = std::move(other._elements);
+    //return *this;
+//}
+
+void Array::push_back(const Type& type) {
+    _elements.push_back(type);
+}
+
+void Array::push_back(Type&& type) {
+    _elements.push_back(std::move(type));
+}
+
+void Array::pop_back() {
+    _elements.pop_back();
+}
+
+Type& Array::at(std::size_t index) {
+    return _elements.at(index);
+}
+
+const Type& Array::at(std::size_t index) const {
+    return _elements.at(index);
+}
+
+Type& Array::operator[](std::size_t index) {
+    return _elements[index];
+}
+
+const Type& Array::operator[](std::size_t index) const {
+    return _elements[index];
+}
+
+Type& Array::back() {
+    return _elements.back();
+}
+
+const Type& Array::back() const {
+    return _elements.back();
+}
+
+void Array::reserve(std::size_t new_cap) {
+    _elements.reserve(new_cap);
+}
+
+void Array::resize(std::size_t new_cap) {
+    _elements.resize(new_cap);
+}
+
+bool Array::empty() const {
+    return _elements.empty();
+}
+
+std::size_t Array::size() const {
+    return _elements.size();
+}
+
 Element& Object::operator[](const std::string& name) {
     for(auto& member : _members) {
         if(member._name == name) {

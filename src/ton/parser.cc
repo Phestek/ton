@@ -46,6 +46,9 @@ bool Parser::match_token(Token_Type type) {
 Element Parser::parse_element() {
     auto name = next_token(Token_Type::IDENTIFIER).value;
     if(match_token(Token_Type::EQUALS)) {
+        if(match_token(Token_Type::L_BRACKET)) {
+            return parse_array(std::move(name));
+        }
         return parse_primitive(std::move(name));
     }
     if(match_token(Token_Type::L_BRACE)) {
@@ -76,6 +79,53 @@ Element Parser::parse_object(std::string&& name) {
         members.push_back(parse_element());
     }
     return Element{name, std::move(members)};
+}
+
+Element Parser::parse_array(std::string&& name) {
+    Array array;
+    if(!match_token(Token_Type::R_BRACKET)) {
+        do {
+            array.push_back(parse_array_element());
+        } while(match_token(Token_Type::COMMA));
+        next_token(Token_Type::R_BRACKET);
+    }
+    return Element{name, array};
+}
+
+Type Parser::parse_array_element() {
+    auto value = next_token();
+    if(value.type == Token_Type::INTEGER) {
+        return std::stoi(value.value);
+    } else if(value.type == Token_Type::FLOAT) {
+        return std::stod(value.value);
+    } else if(value.type == Token_Type::STRING) {
+        return value.value;
+    } else if(value.type == Token_Type::L_BRACE) {
+        return parse_anonymous_object();
+    } else if(value.type == Token_Type::L_BRACKET) {
+        return parse_nested_array();
+    }
+    report_error("Unexpected tokennnn");
+    return 0;
+}
+
+Type Parser::parse_anonymous_object() {
+    std::vector<Element> members;
+    while(!match_token(Token_Type::R_BRACE)) {
+        members.push_back(parse_element());
+    }
+    return Object{members};
+}
+
+Type Parser::parse_nested_array() {
+    std::vector<Type> elements;
+    if(!match_token(Token_Type::R_BRACKET)) {
+        do {
+            elements.push_back(parse_array_element());
+        } while(match_token(Token_Type::COMMA));
+        next_token(Token_Type::R_BRACKET);
+    }
+    return Array{elements};
 }
 
 }

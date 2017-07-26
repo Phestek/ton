@@ -12,6 +12,7 @@ enum class Token_Type {
     L_BRACKET,
     R_BRACKET,
     EQUALS,
+    COMMA,
     INTEGER,
     FLOAT,
     STRING,

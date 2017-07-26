@@ -40,11 +40,10 @@ if(NOT TON_NO_TESTS)
             test/element_tests.cc
             test/lexer_tests.cc
             test/main.cc
-            test/parser_test.cc)
+            test/parser_tests.cc)
     add_executable(ton_tests ${TESTS})
     find_package(GTest REQUIRED)
     target_include_directories(ton_tests PUBLIC ${GTEST_INCLUDE_DIRS})
     target_link_libraries(ton_tests ton ${GTEST_BOTH_LIBRARIES})
     add_test(NAME test_all_in_ton COMMAND ton_tests)
 endif()
-

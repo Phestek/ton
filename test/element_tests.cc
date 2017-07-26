@@ -35,8 +35,28 @@ TEST(Element, String_Reassignment) {
     ASSERT_STREQ(s.as<ton::String>().c_str(), "tset");
 }
 
-TEST(Element, Object) {
-    ton::Element o{"str", ton::Object{std::vector<ton::Element>{}}};
+//TEST(Element, Object) {
+//    ton::Element o{"str", ton::Object{std::vector<ton::Element>{}}};
+//}
+
+TEST(Element, Array_Constructor) {
+    ton::Element arr{"arr", ton::Array{{10, 20, 30}}};
+    ASSERT_NO_THROW(arr.as<ton::Array>());
+    ASSERT_EQ(arr.as<ton::Array>().size(), 3);
+}
+
+TEST(Element, Array_Elements_Access) {
+    ton::Element arr{"arr", ton::Array{{10, 20, 30}}};
+    ASSERT_EQ(arr.as<ton::Array>().at(0), 10);
+    ASSERT_EQ(arr.as<ton::Array>().at(1), 20);
+    ASSERT_EQ(arr.as<ton::Array>().at(2), 30);
+}
+
+TEST(Element, Nested_Arrays) {
+    ton::Element arr{"arr", ton::Array{{ton::Array{}, ton::Array{}}}};
+    ASSERT_NO_THROW(arr.as<ton::Array>().at(0));
+    ASSERT_NO_THROW(arr.as<ton::Array>().at(1));
+    ASSERT_THROW(arr.as<ton::Array>().at(2), std::out_of_range);
 }
 
 TEST(Element, Integer_Comparison_Equals) {

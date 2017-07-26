@@ -23,6 +23,11 @@ private:
     Element parse_element();
     Element parse_primitive(std::string&& name);
     Element parse_object(std::string&& name);
+    Element parse_array(std::string&& name);
+    Type parse_array_element();
+    // Anonymous objects are only used as Array elements.
+    Type parse_anonymous_object();
+    Type parse_nested_array();
 
     Lexer&    _lexer;
 
