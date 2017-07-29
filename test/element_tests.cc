@@ -81,7 +81,7 @@ TEST(Element, Float_Comparison_Not_Equals) {
 
 TEST(Element, String_Comparison_Equals) {
     ton::Element val{"val", "asdf"};
-    ASSERT_EQ(val.as<ton::String>(), "fdsa");
+    ASSERT_EQ(val.as<ton::String>(), "asdf");
 }
 
 TEST(Element, String_Comparison_Not_Equals) {
