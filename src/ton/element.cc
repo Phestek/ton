@@ -10,23 +10,7 @@ Object::Object(std::vector<Element>&& members)
         : _members{members} {
 }
 
-Array_Element::Array_Element(const Type& type) {
-    _type = type;
-}
-
-Array_Element(Type&& type) {
-    _type = std::move(type);
-}
-
-Array_Element& Array_Element::operator=(const Type& type) {
-    _type = type;
-    return *this;
-}
-
-Array_Element& Array_Element::operator=(Type&& type) {
-    _type = std::move(type);
-    return *this;
-}
+Array::Array() {}
 
 Array::Array(const Array& other) {
     std::copy(other._elements.begin(), other._elements.end(), std::back_inserter(_elements));
@@ -36,7 +20,7 @@ Array::Array(const Array& other) {
     //_elements = std::move(other._elements);
 //}
 
-Array::Array(const std::vector<Array_Element>& vec) {
+Array::Array(const std::vector<Type>& vec) {
     std::copy(vec.begin(), vec.end(), std::back_inserter(_elements));
 }
 

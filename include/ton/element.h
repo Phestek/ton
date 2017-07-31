@@ -29,40 +29,33 @@ private:
     std::vector<Element> _members;
 };
 
-class Array_Element {
-public:
-    Array_Element(const Type& type);
-    Array_Element(Type&& type);
-
-    Array_Element& operator=(const Type& type);
-    Array_Element& operator=(Type&& type);
-
-    template <typename T>
-    T& as();
-    template <typename T>
-    const T& as() const;
-
-private:
-    Type _type;
-};
-
 class Array;
-
 using Type = std::variant<Integer, Float, String, Object, Array>;
+
+template <typename T>
+bool operator==(const Type& left, const T& right) {
+    return std::get<T>(left) == right;
+}
+
+template <typename T>
+bool operator!=(const Type& left, const T& right) {
+    return std::get<T>(left) != right;
+}
 
 // This wrapper is necessary, because there is no way to forward declare std::vector<Type>.
 // I should probably reimplement std::vector, but lets leave it as it is now.
 
 class Array {
 public:
-    Array() = default;
+    Array();
 
     // TODO: Move constructors are broken.
+
 
     Array(const Array& vec);
     //Array(Array&& vec);
     
-    Array(const std::vector<Array_Element>& vec);
+    Array(const std::vector<Type>& vec);
     //Array(std::vector<Type>&& vec);
     
     Array& operator=(const Array& vec);
@@ -87,7 +80,7 @@ public:
     std::size_t size() const;
 
 private:
-    std::vector<Array_Element> _elements;
+    std::vector<Type> _elements;
 };
 
 class Element {
@@ -121,33 +114,9 @@ private:
 };
 
 template <typename T>
-bool operator==(const Type& left, const T& right);
-template <typename T>
-bool operator!=(const Type& left, const T& right);
-template <typename T>
 bool operator==(const Element& left, const T& right);
 template <typename T>
 bool operator!=(const Element& left, const T& right);
-
-template <typename T>
-bool operator==(const Type& left, const T& right) {
-    return std::get<T>(left) == right;
-}
-
-template <typename T>
-bool operator!=(const Type& left, const T& right) {
-    return std::get<T>(left) != right;
-}
-
-template <typename T>
-bool operator==(const Element& left, const T& right) {
-    return std::get<T>(left._type) == right;
-}
-
-template <typename T>
-bool operator!=(const Element& left, const T& right) {
-    return std::get<T>(left._type) != right;
-}
 
 template <typename T>
 T& Element::as() {
@@ -160,14 +129,22 @@ const T& Element::as() const {
 }
 
 template <typename T>
-T& Array_Element::as() {
-    return std::get<T>(_type);
+bool operator==(const Element& left, const T& right) {
+    return std::get<T>(left._type) == right;
 }
 
 template <typename T>
-const T& Array_Element::as() const {
-    return std::get<T>(_type);
+bool operator!=(const Element& left, const T& right) {
+    return std::get<T>(left._type) != right;
 }
+
+//bool operator==(const Element& left, const char* str) {
+    //return std::get<String>(left._type) == str;
+//}
+
+//bool operator!=(const Element& left, const char* str) {
+    //return std::get<String>(left._type) != str;
+//}
 
 }
 
